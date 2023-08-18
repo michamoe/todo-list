@@ -1,74 +1,79 @@
-// Create a "close" button and append it to each list item
-var myNodelist = document.getElementsByTagName("LI");
-var i;
-for (i = 0; i < myNodelist.length; i++) {
-  var span = document.createElement("SPAN");
-  var txt = document.createTextNode("\u00D7");
-  span.className = "close";
-  span.appendChild(txt);
-  myNodelist[i].appendChild(span);
-}
+// Modal Dialog for empty input
+var myModal = new bootstrap.Modal(document.getElementById("myModal"), {
+  keyboard: false,
+});
 
 // Click on a close button to hide the current list item
 var close = document.getElementsByClassName("close");
 var i;
 for (i = 0; i < close.length; i++) {
   close[i].onclick = function () {
-    var div = this.parentElement;
-    // div.style.display = "none";
+    var div = this.parentElement.parentElement;
+    console.log(div);
     div.remove();
   };
 }
 
 // Add a "checked" symbol when clicking on a list item
-var list = document.querySelector("ul");
-list.addEventListener(
-  "click",
-  function (ev) {
-    if (ev.target.tagName === "LI") {
+var list = document.querySelectorAll("#myUL>li");
+list.forEach((element) => {
+  element.addEventListener(
+    "click",
+    function (ev) {
       ev.target.classList.toggle("checked");
-    }
-  },
-  false
-);
+    },
+    false
+  );
+});
 
+// Prevent form submit, fire newElement(), reset input
 myDIV.addEventListener("submit", (event) => {
   event.preventDefault();
   newElement();
+  document.getElementById("myInput").value = ""; // reset input
 });
 
-// Create a new list item when clicking on the "Add" button
+// Create a new list item in ul #myUL
 function newElement() {
-  console.log("ich war hier");
-  var li = document.createElement("li");
-  var inputValue = document.getElementById("myInput").value;
-  var t = document.createTextNode(inputValue);
-  li.appendChild(t);
-  if (inputValue === "") {
-    alert("You must write something!");
+  if (document.getElementById("myInput").value === "") {
+    myModal.toggle();
   } else {
-    document.getElementById("myUL").appendChild(li);
+    let noteText = document.getElementById("myInput").value;
+    let noteList = document.querySelector("#myUL");
+    const templateString = `<div class="noteText">${noteText}</div>
+    <div class="icons">
+      <i class="bi bi-check-circle check"></i>
+      <i class="bi bi-pencil edit"></i>
+      <i class="bi bi-trash close"></i>
+    </div>`;
+    const newNote = document.createElement("li");
+    newNote.classList.add("d-flex");
+    newNote.innerHTML = templateString;
+    noteList.appendChild(newNote);
   }
-  document.getElementById("myInput").value = "";
-
-  var span = document.createElement("SPAN");
-  var txt = document.createTextNode("\u00D7");
-  span.className = "close";
-  span.appendChild(txt);
-  li.appendChild(span);
-
+  // add event handler "close" to new element
+  // TODO: add event handler for edit and check also
   for (i = 0; i < close.length; i++) {
     close[i].onclick = function () {
-      var div = this.parentElement;
-      div.style.display = "none";
+      var div = this.parentElement.parentElement;
+      div.remove();
     };
   }
 }
 
-
-
-
-// sven
-
-
-
+// EXPERIMENTAL (Sven)
+// TODO: try inplace edit with dblclick/click on div "noteText"
+let editableList = document.querySelectorAll(".edit");
+for (let i = 0; i < editableList.length; i++) {
+  editableList[i].addEventListener(
+    "click",
+    function (ev) {
+      let contentEdit = document.createAttribute("contenteditable");
+      let checkAttr =
+        ev.target.parentElement.parentElement.querySelector(".noteText");
+      console.log(checkAttr);
+      checkAttr.innerText += " Test";
+    },
+    false
+  );
+}
