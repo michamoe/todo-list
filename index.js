@@ -32,7 +32,10 @@ list.addEventListener(
   false
 );
 
-myDIV.addEventListener("submit", (event) => {event.preventDefault(); newElement();});
+myDIV.addEventListener("submit", (event) => {
+  event.preventDefault();
+  newElement();
+});
 
 // Create a new list item when clicking on the "Add" button
 function newElement() {
