@@ -1,0 +1,19 @@
+*{
+    padding:0;
+    margin:0;
+}
+
+body{
+    background-color: #0d0b22;
+}
+
+.login-btn{
+    background-color: #fdb21a;
+    color: #02aed6;
+    border: none;
+}
+
+.input-code{
+    background-color: #e8107c;
+    color: #11cd88;
+}
