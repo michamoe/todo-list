@@ -1,4 +1,20 @@
 /* Include the padding and border in an element's total width and height */
+:root {
+  /*  CSS Color Variables 
+    * usage example: use "var(--dl-color1);" in a color css rule 
+  */
+  --dl-color1: #02aed6;
+  --dl-color2: #fdb21a;
+  --dl-color3: #e8107c;
+  --dl-color4: #11cd88;
+  --dl-color5: #0d0b22;
+  --dl-colorEven: #eeeeee;
+  --dl-colorOdd: #f9f9f9;
+  --dl-colorHover: #dddddd;
+  --dl-colorchkd: #888888;
+  --dl-text-light: #ffffff; /* light textcolor */
+  --dl-text-dark: var(--dl-color5); /* dark textcolor */
+}
 
 body {
   background-color: #0d0b22;
@@ -223,4 +239,96 @@ main {
   width: 100%;
   height: 80%;
   padding: 5rem;
+}
+
+/* Style the header */
+.header {
+  background-color: var(--dl-color2);
+  padding: 30px 40px;
+  color: var(--dl-text-light);
+  text-align: center;
+}
+/* Clear floats after the header */
+.header:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+#myDIV > h2 {
+  color: var(--dl-color5);
+  font-weight: bold;
+}
+/* Remove margins and padding from the list */
+#myUL {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+#myUL .d-flex {
+  justify-content: space-between;
+}
+/* Style the list items */
+#myUL > li {
+  cursor: pointer;
+  position: relative;
+  font-size: 1.1em;
+  padding: 12px 8px 12px 40px;
+  background: var(--dl-colorEven);
+  transition: 0.2s;
+  /* make the list items unselectable */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+/* Set all odd list items to a different color (zebra-stripes) */
+#myUL li:nth-child(odd) {
+  background: var(--dl-colorOdd);
+}
+/* Darker background-color on hover */
+#myUL li:hover {
+  background: var(--dl-colorHover);
+}
+/* When clicked on, add a background color and strike out text */
+#myUL li.checked {
+  background: var(--dl-colorchkd);
+  color: var(--dl-text-light);
+  text-decoration: line-through;
+}
+/* Style the CRUD buttons */
+#myUL .icons {
+  padding-right: 8px;
+  letter-spacing: 0.4em;
+}
+
+/* Style the input */
+#myDIV input {
+  margin: 0;
+  width: 75%;
+  padding: 10px;
+  float: left;
+  border-radius: 12px 0 0 12px;
+  border: 0;
+}
+
+/* Style the "Add" button */
+#myDIV .addBtn {
+  padding: 10px;
+  width: 25%;
+  background: var(--dl-color4);
+  color: var(--dl-color5);
+  text-align: center;
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 0 12px 12px 0;
+  border: 0;
+}
+
+#myDIV .addBtn:hover {
+  background-color: var(--dl-color3);
+}
+
+.todo_wrapper {
+  width: 100%;
+  margin-top: 50px;
 }
