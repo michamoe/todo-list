@@ -40,8 +40,7 @@ function add_close_listener() {
   for (let i = 0; i < close.length; i++) {
     close[i].onclick = function () {
       console.log("close - button");
-      let div = this.parentElement.parentElement;
-      div.remove();
+      this.parentElement.parentElement.remove();
       save();
     };
   }
