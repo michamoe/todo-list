@@ -90,6 +90,7 @@ for (let i = 0; i < editableList.length; i++) {
 }
 
 //cursorPosition in contenteditable
+// TODO: set cursor at end of text in "noteText"
 function cursorPosition() {}
 
 //addEventHanlder to newElement
