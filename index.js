@@ -49,6 +49,7 @@ function newElement() {
     const newNote = document.createElement("li");
     newNote.classList.add("d-flex");
     newNote.innerHTML = templateString;
+    console.log(newNote);
     noteList.appendChild(newNote);
   }
   // add event handler "close" to new element
@@ -63,7 +64,7 @@ function newElement() {
 
 // EXPERIMENTAL (Sven)
 // TODO: try inplace edit with dblclick/click on div "noteText"
-let editableList = document.querySelectorAll(".edit");
+let editableList = document.getElementsByClassName("edit");
 for (let i = 0; i < editableList.length; i++) {
   editableList[i].addEventListener(
     "click",
@@ -71,9 +72,28 @@ for (let i = 0; i < editableList.length; i++) {
       let contentEdit = document.createAttribute("contenteditable");
       let checkAttr =
         ev.target.parentElement.parentElement.querySelector(".noteText");
-      console.log(checkAttr);
-      checkAttr.innerText += " Test";
+      checkAttr.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          document.activeElement.blur();
+          event.preventDefault();
+        }
+      });
+      checkAttr.addEventListener("focusout", (event) => {
+        checkAttr.removeAttribute("contenteditable");
+      });
+      checkAttr.setAttributeNode(contentEdit);
+      // TODO: cursor ans Ende
+      checkAttr.focus();
     },
     false
   );
+}
+
+//cursorPosition in contenteditable
+function cursorPosition() {}
+
+//addEventHanlder to newElement
+function addMyEvents(handler, func) {
+  //handler: click, dblclick, ...
+  //func: function für event
 }
