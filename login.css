@@ -1,0 +1,48 @@
+*{
+    padding:0;
+    margin:0;
+}
+
+:root {
+    --dl-color1: #02aed6;
+    --dl-color2: #fdb21a;
+    --dl-color3: #e8107c;
+    --dl-color4: #11cd88;
+    --dl-color5: #0d0b22;
+    --dl-colorEven: #eeeeee;
+    --dl-colorOdd: #f9f9f9;
+    --dl-colorHover: #dddddd;
+    --dl-colorchkd: #888888;
+    --dl-text-light: #ffffff;
+    --dl-text-dark: var(--dl-color5); 
+  }
+
+body{
+    background-color: #0d0b22;
+}
+
+.input-code {
+    background:var(--dl-color2) ;
+    margin: 0;
+    width: 75%;
+    padding: 10px;
+    float: left;
+    border-radius: 12px 0 0 12px;
+    border: 0;
+  }
+  
+  .login-btn {
+    padding: 10px;
+    width: 25%;
+    background: var(--dl-color4);
+    color: var(--dl-color5);
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 0 12px 12px 0;
+    border: 0;
+  }
+
+  .login-btn:hover {
+    background-color: var(--dl-color3);
+  }
