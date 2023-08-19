@@ -86,20 +86,20 @@ add_close_listener();
 
 // Add a "checked" symbol when clicking on a list item
 function add_check_listener() {
+  console.log('adding check listener');
   let list = document.querySelectorAll("#myUL>li");
   list.forEach((element) => {
     element.addEventListener(
       "click",
       function (ev) {
         ev.target.classList.toggle("checked");
+        console.log('checked toggled');
         save();
       },
       false
     );
   });
 }
-
-add_check_listener();
 
 
 if (!retrieve()) {
