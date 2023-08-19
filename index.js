@@ -1,176 +1,80 @@
-
-
-function retrieve() {
-  let myNodelist = localStorage.getItem("node_list");
-  console.log("retrieving: ",myNodelist);
-  if (!myNodelist) {
-    console.log("nothing in local storage ...");
-    return false;
-  }
-  let lis = document.getElementsByTagName("LI");
-  for (let i = 0; i < lis.length; i++) {
-    console.log('retrieve - removing: '+lis[i].textContent);
-    lis[i].remove();
-  }
-  myNodelist = JSON.parse(myNodelist);
-  console.log("retrieve - node_list: " + localStorage.getItem("node_list"));
-  for (let i = 0; i < myNodelist.length; i++) {
-    let li = document.createElement("li");
-    let inputValue = myNodelist[i].split(";")[0];
-    var t = document.createTextNode(inputValue);
-    li.appendChild(t);
-    document.getElementById("myUL").appendChild(li);
-    let span = document.createElement("SPAN");
-    let txt = document.createTextNode("\u00D7");
-    span.className = "close";
-    span.appendChild(txt);
-    li.appendChild(span);
-    if (myNodelist[i].split(";")[1] == "1") {
-      li.classList.toggle("checked");
-    }
-  }
-  var close = document.getElementsByClassName("close");
-  for (let i = 0; i < close.length; i++) {
-    close[i].onclick = function () {
-      var div = this.parentElement;
-      div.remove();
-      save();
-    };
-  }
-  var list = document.querySelector("ul");
-  list.addEventListener(
-    "click",
-    function (ev) {
-      if (ev.target.tagName === "LI") {
-        ev.target.classList.toggle("checked");
-        save();
-      }
-    },
-    false
-  );
-  save();
-  return true;
-}
-
-function save() {
-  // ["name;checked",]
-  let lis = document.getElementsByTagName("LI");
-  let result = []
-  let name = "";
-  for (let i = 0; i < lis.length; i++) {
-    name = lis[i].textContent.slice(0,-1);
-    if(lis[i].classList.contains("checked")){
-      name = name+";1";
-    }
-    else {
-      name = name+";0";
-    }
-    result.push(name);
-  }
-  localStorage.setItem("node_list", JSON.stringify(result));
-  console.log("save - node_list: " + JSON.stringify(result));
-}
-
-if (!retrieve()) {
-  // Create a "close" button and append it to each list item
-  let myNodelist = document.getElementsByTagName("LI");
-  var i;
-  for (i = 0; i < myNodelist.length; i++) {
-    var span = document.createElement("SPAN");
-    var txt = document.createTextNode("\u00D7");
-    span.className = "close";
-    span.appendChild(txt);
-    myNodelist[i].appendChild(span);
-  }
-
-  // Click on a close button to hide the current list item
-  var close = document.getElementsByClassName("close");
-  var i;
-  for (i = 0; i < close.length; i++) {
-    close[i].onclick = function () {
-      var div = this.parentElement;
-      // div.style.display = "none";
-      div.remove();
-      save();
-    };
-  }
-
-  // Add a "checked" symbol when clicking on a list item
-  var list = document.querySelector("ul");
-  list.addEventListener(
-    "click",
-    function (ev) {
-      if (ev.target.tagName === "LI") {
-        ev.target.classList.toggle("checked");
-        save();
-      }
-    },
-    false
-  );
-  
-  save();
-}
+// Modal Dialog for empty input
+var myModal = new bootstrap.Modal(document.getElementById("myModal"), {
+  keyboard: false,
+});
 
 // Click on a close button to hide the current list item
-// var close = document.getElementsByClassName("close");
-// let i;
-// for (i = 0; i < close.length; i++) {
-//   close[i].onclick = function () {
-//     let div = this.parentElement;
-//     // div.style.display = "none";
-//     div.remove();
-//   };
-// }
+var close = document.getElementsByClassName("close");
+var i;
+for (i = 0; i < close.length; i++) {
+  close[i].onclick = function () {
+    var div = this.parentElement.parentElement;
+    console.log(div);
+    div.remove();
+  };
+}
 
 // Add a "checked" symbol when clicking on a list item
-// var list = document.querySelector("ul");
-// list.addEventListener(
-//   "click",
-//   function (ev) {
-//     if (ev.target.tagName === "LI") {
-//       ev.target.classList.toggle("checked");
+var list = document.querySelectorAll("#myUL>li");
+list.forEach((element) => {
+  element.addEventListener(
+    "click",
+    function (ev) {
+      ev.target.classList.toggle("checked");
+    },
+    false
+  );
+});
 
-//       // Storing data:
-//       myNodelist = document.getElementsByTagName("LI");
-//       const myJSON = JSON.stringify(myNodelist);
-//       localStorage.setItem("node_list", myJSON);
-//     }
-//   },
-//   false
-// );
-
+// Prevent form submit, fire newElement(), reset input
 myDIV.addEventListener("submit", (event) => {
   event.preventDefault();
   newElement();
+  document.getElementById("myInput").value = ""; // reset input
 });
 
-// Create a new list item when clicking on the "Add" button
+// Create a new list item in ul #myUL
 function newElement() {
-  let li = document.createElement("li");
-  let inputValue = document.getElementById("myInput").value;
-  var t = document.createTextNode(inputValue);
-  li.appendChild(t);
-  if (inputValue === "") {
-    alert("You must write something!");
+  if (document.getElementById("myInput").value === "") {
+    myModal.toggle();
   } else {
-    document.getElementById("myUL").appendChild(li);
+    let noteText = document.getElementById("myInput").value;
+    let noteList = document.querySelector("#myUL");
+    const templateString = `<div class="noteText">${noteText}</div>
+    <div class="icons">
+      <i class="bi bi-check-circle check"></i>
+      <i class="bi bi-pencil edit"></i>
+      <i class="bi bi-trash close"></i>
+    </div>`;
+    const newNote = document.createElement("li");
+    newNote.classList.add("d-flex");
+    newNote.innerHTML = templateString;
+    noteList.appendChild(newNote);
   }
-  document.getElementById("myInput").value = "";
-
-  var span = document.createElement("SPAN");
-  var txt = document.createTextNode("\u00D7");
-  span.className = "close";
-  span.appendChild(txt);
-  li.appendChild(span);
-
+  // add event handler "close" to new element
+  // TODO: add event handler for edit and check also
   for (i = 0; i < close.length; i++) {
     close[i].onclick = function () {
-      var div = this.parentElement;
+      var div = this.parentElement.parentElement;
       div.remove();
-      save();
     };
   }
   save();
 }
 
-// sven
+// EXPERIMENTAL (Sven)
+// TODO: try inplace edit with dblclick/click on div "noteText"
+let editableList = document.querySelectorAll(".edit");
+for (let i = 0; i < editableList.length; i++) {
+  editableList[i].addEventListener(
+    "click",
+    function (ev) {
+      let contentEdit = document.createAttribute("contenteditable");
+      let checkAttr =
+        ev.target.parentElement.parentElement.querySelector(".noteText");
+      console.log(checkAttr);
+      checkAttr.innerText += " Test";
+    },
+    false
+  );
+}
