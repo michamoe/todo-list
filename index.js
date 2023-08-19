@@ -6,13 +6,12 @@ function retrieve() {
   }
   let lis = document.querySelector("#myUL");
   for (let i = 0; i < lis.length; i++) {
-    console.log('retrieve - removing: '+lis[i].textContent);
+    console.log("retrieve - removing: " + lis[i].textContent);
     lis[i].remove();
   }
   myNodelist = JSON.parse(myNodelist);
   console.log("retrieve - node_list: " + localStorage.getItem("node_list"));
   for (let i = 0; i < myNodelist.length; i++) {
-
     let inputValue = myNodelist[i].split(";")[0];
     let noteList = document.querySelector("#myUL");
     const templateString = `<div class="noteText">${inputValue}</div>
@@ -22,13 +21,12 @@ function retrieve() {
       <i class="bi bi-trash close"></i>
     </div>`;
     const newNote = document.createElement("li");
-    newNote.classList.add("d-flex");    
+    newNote.classList.add("d-flex");
     if (myNodelist[i].split(";")[1] == "1") {
       newNote.classList.add("checked");
     }
     newNote.innerHTML = templateString;
     noteList.appendChild(newNote);
-
   }
   save();
   add_check_listener();
@@ -36,10 +34,12 @@ function retrieve() {
   return true;
 }
 
-function add_close_listener(){
+function add_close_listener() {
+  console.log("adding close listener");
   var close = document.getElementsByClassName("close");
   for (let i = 0; i < close.length; i++) {
     close[i].onclick = function () {
+      console.log("close - button");
       let div = this.parentElement.parentElement;
       div.remove();
       save();
@@ -47,20 +47,18 @@ function add_close_listener(){
   }
 }
 
-
 function save() {
   // ["name;checked",]
   let lis = document.querySelectorAll("#myUL>li>.noteText");
-  let result = []
+  let result = [];
   let name = "";
   for (let i = 0; i < lis.length; i++) {
     name = lis[i].innerHTML;
-    console.log('save - name: '+name);
-    if(lis[i].parentElement.classList.contains("checked")){
-      name = name+";1";
-    }
-    else {
-      name = name+";0";
+    console.log("save - name: " + name);
+    if (lis[i].parentElement.classList.contains("checked")) {
+      name = name + ";1";
+    } else {
+      name = name + ";0";
     }
     result.push(name);
   }
@@ -74,49 +72,33 @@ function save() {
   console.log("save - node_list: " + JSON.stringify(result));
 }
 
-
-
 // Modal Dialog for empty input
 var myModal = new bootstrap.Modal(document.getElementById("myModal"), {
   keyboard: false,
 });
 
-// Click on a close button to hide the current list item
-add_close_listener();
-
 // Add a "checked" symbol when clicking on a list item
 function add_check_listener() {
-  console.log('adding check listener');
-  let list = document.querySelectorAll("#myUL>li");
+  console.log("adding check listener");
+  var list = document.querySelectorAll("#myUL>li");
   list.forEach((element) => {
-    element.addEventListener(
-      "click",
-      function (ev) {
-        ev.target.classList.toggle("checked");
-        console.log('checked toggled');
-        save();
-      },
-      false
-    );
+    element.onclick = function (ev) {
+      ev.target.classList.toggle("checked");
+      console.log("checked toggled");
+      save();
+    };
   });
 }
 
-
 if (!retrieve()) {
-
   // Click on a close button to hide the current list item
   add_close_listener();
 
   // Add a "checked" symbol when clicking on a list item
   add_check_listener();
-  
+
   save();
 }
-
-
-
-
-
 
 // Prevent form submit, fire newElement(), reset input
 myDIV.addEventListener("submit", (event) => {
