@@ -30,17 +30,21 @@ function retrieve() {
     noteList.appendChild(newNote);
 
   }
+  save();
+  add_check_listener();
+  add_close_listener();
+  return true;
+}
+
+function add_close_listener(){
   var close = document.getElementsByClassName("close");
   for (let i = 0; i < close.length; i++) {
     close[i].onclick = function () {
-      var div = this.parentElement;
+      let div = this.parentElement.parentElement;
       div.remove();
       save();
     };
   }
-  add_check_listener();
-  save();
-  return true;
 }
 
 
@@ -63,6 +67,7 @@ function save() {
 
   if (result.length === 0) {
     console.log("save - node_list mt ");
+    localStorage.removeItem("node_list");
     return false;
   }
   localStorage.setItem("node_list", JSON.stringify(result));
@@ -77,15 +82,7 @@ var myModal = new bootstrap.Modal(document.getElementById("myModal"), {
 });
 
 // Click on a close button to hide the current list item
-var close = document.getElementsByClassName("close");
-var i;
-for (i = 0; i < close.length; i++) {
-  close[i].onclick = function () {
-    var div = this.parentElement.parentElement;
-    console.log(div);
-    div.remove();
-  };
-}
+add_close_listener();
 
 // Add a "checked" symbol when clicking on a list item
 function add_check_listener() {
@@ -102,35 +99,16 @@ function add_check_listener() {
   });
 }
 
-add_check_listener()
+add_check_listener();
 
 
 if (!retrieve()) {
 
   // Click on a close button to hide the current list item
-  var close = document.getElementsByClassName("close");
-  var i;
-  for (i = 0; i < close.length; i++) {
-    close[i].onclick = function () {
-      var div = this.parentElement;
-      // div.style.display = "none";
-      div.remove();
-      save();
-    };
-  }
+  add_close_listener();
 
   // Add a "checked" symbol when clicking on a list item
-  var list = document.querySelector("#myUL")
-  list.addEventListener(
-    "click",
-    function (ev) {
-      if (ev.target.tagName === "LI") {
-        ev.target.classList.toggle("checked");
-        save();
-      }
-    },
-    false
-  );
+  add_check_listener();
   
   save();
 }
@@ -166,13 +144,7 @@ function newElement() {
     noteList.appendChild(newNote);
   }
   // add event handler "close" to new element
-  // TODO: add event handler for edit and check also
-  for (i = 0; i < close.length; i++) {
-    close[i].onclick = function () {
-      var div = this.parentElement.parentElement;
-      div.remove();
-    };
-  }
+  add_close_listener();
   add_check_listener();
   save();
 }
