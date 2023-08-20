@@ -1,16 +1,21 @@
+let debug = true;
+function clg(variable) {
+  if (debug) console.log(variable);
+}
+
 function retrieve() {
   let myNodelist = localStorage.getItem("node_list");
   if (!myNodelist) {
-    console.log("nothing in local storage ...");
+    clg("nothing in local storage ...");
     return false;
   }
   let lis = document.querySelector("#myUL");
   for (let i = 0; i < lis.length; i++) {
-    console.log("retrieve - removing: " + lis[i].textContent);
+    clg("retrieve - removing: " + lis[i].textContent);
     lis[i].remove();
   }
   myNodelist = JSON.parse(myNodelist);
-  console.log("retrieve - node_list: " + localStorage.getItem("node_list"));
+  clg("retrieve - node_list: " + localStorage.getItem("node_list"));
   for (let i = 0; i < myNodelist.length; i++) {
     let inputValue = myNodelist[i].split(";")[0];
     let noteList = document.querySelector("#myUL");
@@ -30,16 +35,17 @@ function retrieve() {
   }
   save();
   add_check_listener();
+  add_edit_listener();
   add_close_listener();
   return true;
 }
 
 function add_close_listener() {
-  console.log("adding close listener");
+  clg("adding close listener");
   var close = document.getElementsByClassName("close");
   for (let i = 0; i < close.length; i++) {
     close[i].onclick = function () {
-      console.log("close - button");
+      clg("close - button");
       this.parentElement.parentElement.remove();
       save();
     };
@@ -53,7 +59,7 @@ function save() {
   let name = "";
   for (let i = 0; i < lis.length; i++) {
     name = lis[i].innerHTML;
-    console.log("save - name: " + name);
+    clg("save - name: " + name);
     if (lis[i].parentElement.classList.contains("checked")) {
       name = name + ";1";
     } else {
@@ -63,12 +69,12 @@ function save() {
   }
 
   if (result.length === 0) {
-    console.log("save - node_list mt ");
+    clg("save - node_list mt ");
     localStorage.removeItem("node_list");
     return false;
   }
   localStorage.setItem("node_list", JSON.stringify(result));
-  console.log("save - node_list: " + JSON.stringify(result));
+  clg("save - node_list: " + JSON.stringify(result));
 }
 
 // Modal Dialog for empty input
@@ -78,12 +84,12 @@ var myModal = new bootstrap.Modal(document.getElementById("myModal"), {
 
 // Add a "checked" symbol when clicking on a list item
 function add_check_listener() {
-  console.log("adding check listener");
+  clg("adding check listener");
   var list = document.querySelectorAll("#myUL>li");
   list.forEach((element) => {
     element.onclick = function (ev) {
       ev.target.classList.toggle("checked");
-      console.log("checked toggled");
+      clg("checked toggled");
       save();
     };
   });
@@ -92,6 +98,9 @@ function add_check_listener() {
 if (!retrieve()) {
   // Click on a close button to hide the current list item
   add_close_listener();
+
+  // Add "edit" functionality
+  add_edit_listener();
 
   // Add a "checked" symbol when clicking on a list item
   add_check_listener();
@@ -122,48 +131,132 @@ function newElement() {
     const newNote = document.createElement("li");
     newNote.classList.add("d-flex");
     newNote.innerHTML = templateString;
-    console.log(newNote);
+    clg(newNote);
     noteList.appendChild(newNote);
   }
   // add event handler "close" to new element
-  add_close_listener();
   add_check_listener();
+  add_edit_listener();
+  add_close_listener();
   save();
 }
 
-// EXPERIMENTAL (Sven)
-// TODO: try inplace edit with dblclick/click on div "noteText"
-let editableList = document.getElementsByClassName("edit");
-for (let i = 0; i < editableList.length; i++) {
-  editableList[i].addEventListener(
-    "click",
-    function (ev) {
-      let contentEdit = document.createAttribute("contenteditable");
-      let checkAttr =
-        ev.target.parentElement.parentElement.querySelector(".noteText");
-      checkAttr.addEventListener("keydown", (event) => {
-        if (event.key === "Enter") {
-          document.activeElement.blur();
-          event.preventDefault();
-        }
-      });
-      checkAttr.addEventListener("focusout", (event) => {
-        checkAttr.removeAttribute("contenteditable");
-      });
-      checkAttr.setAttributeNode(contentEdit);
-      // TODO: cursor ans Ende
-      checkAttr.focus();
-    },
-    false
-  );
+// Add edit listener to "edit" icon
+function add_edit_listener() {
+  let editableList = document.getElementsByClassName("edit");
+  for (let i = 0; i < editableList.length; i++) {
+    editableList[i].addEventListener(
+      "click",
+      function (ev) {
+        let contentEdit = document.createAttribute("contenteditable");
+        let checkAttr =
+          ev.target.parentElement.parentElement.querySelector(".noteText");
+        checkAttr.addEventListener("keydown", (event) => {
+          if (event.key === "Enter") {
+            document.activeElement.blur();
+            event.preventDefault();
+          }
+        });
+        checkAttr.addEventListener("focusout", (event) => {
+          checkAttr.removeAttribute("contenteditable");
+          save();
+        });
+        checkAttr.setAttributeNode(contentEdit);
+        Cursor.setCurrentCursorPosition(checkAttr.innerText.length, checkAttr);
+        checkAttr.focus();
+      },
+      false
+    );
+  }
 }
+// Set cursorPosition in contenteditable to the end
+// Credit to Liam (Stack Overflow)
+// https://stackoverflow.com/a/41034697/3480193
+class Cursor {
+  static getCurrentCursorPosition(parentElement) {
+    var selection = window.getSelection(),
+      charCount = -1,
+      node;
 
-//cursorPosition in contenteditable
-// TODO: set cursor at end of text in "noteText"
-function cursorPosition() {}
+    if (selection.focusNode) {
+      if (Cursor._isChildOf(selection.focusNode, parentElement)) {
+        node = selection.focusNode;
+        charCount = selection.focusOffset;
 
-//addEventHanlder to newElement
-function addMyEvents(handler, func) {
-  //handler: click, dblclick, ...
-  //func: function für event
+        while (node) {
+          if (node === parentElement) {
+            break;
+          }
+
+          if (node.previousSibling) {
+            node = node.previousSibling;
+            charCount += node.textContent.length;
+          } else {
+            node = node.parentNode;
+            if (node === null) {
+              break;
+            }
+          }
+        }
+      }
+    }
+
+    return charCount;
+  }
+
+  static setCurrentCursorPosition(chars, element) {
+    if (chars >= 0) {
+      var selection = window.getSelection();
+
+      let range = Cursor._createRange(element, { count: chars });
+
+      if (range) {
+        range.collapse(false);
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
+    }
+  }
+
+  static _createRange(node, chars, range) {
+    if (!range) {
+      range = document.createRange();
+      range.selectNode(node);
+      range.setStart(node, 0);
+    }
+
+    if (chars.count === 0) {
+      range.setEnd(node, chars.count);
+    } else if (node && chars.count > 0) {
+      if (node.nodeType === Node.TEXT_NODE) {
+        if (node.textContent.length < chars.count) {
+          chars.count -= node.textContent.length;
+        } else {
+          range.setEnd(node, chars.count);
+          chars.count = 0;
+        }
+      } else {
+        for (var lp = 0; lp < node.childNodes.length; lp++) {
+          range = Cursor._createRange(node.childNodes[lp], chars, range);
+
+          if (chars.count === 0) {
+            break;
+          }
+        }
+      }
+    }
+
+    return range;
+  }
+
+  static _isChildOf(node, parentElement) {
+    while (node !== null) {
+      if (node === parentElement) {
+        return true;
+      }
+      node = node.parentNode;
+    }
+
+    return false;
+  }
 }

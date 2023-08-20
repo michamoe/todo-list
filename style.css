@@ -186,10 +186,10 @@ main {
 #myUL .icons {
   padding-right: 8px;
   letter-spacing: 0.4em;
+  width: 110px;
 }
 #myUL .noteText {
   display: inline-block;
-  width: 82%;
 }
 
 /* Style the input */
