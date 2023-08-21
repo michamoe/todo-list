@@ -17,12 +17,12 @@
 }
 
 body {
-  background-color: #0d0b22;
+  background-color: var(--dl-color5);
   font-family: "Quicksand", sans-serif;
   font-family: "Roboto", sans-serif;
   box-sizing: border-box;
   margin: 0;
-  color: white;
+  color: var(--dl-text-light);
   scroll-behavior: smooth;
 }
 
@@ -55,21 +55,22 @@ nav {
 
 nav ul .nav-item {
   background-color: #0d0b22;
-  color: #ddd;
+  color: var(--dl-colorHover);
 }
 nav ul .nav-item a {
-  color: #ddd;
+  color: var(--dl-colorHover);
   font-weight: bold;
   font-family: "Quicksand", sans-serif;
 }
 
 main {
-  width: 100vw;
+  width: 100%;
 }
 #first-page {
   padding: 2rem 0;
   width: 100vw;
   height: 80%;
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -85,7 +86,7 @@ main {
 }
 .btn {
   background-color: #faab18;
-  color: #0d0b22;
+  color: var(--dl-color5);
   font-family: "Quicksand", sans-serif;
   font-weight: bold;
   border: none;
@@ -113,10 +114,6 @@ main {
 #demo-text {
   padding: 0 3rem;
   width: 60%;
-}
-.todo_wrapper {
-  width: 100%;
-  padding-right: 3rem;
 }
 
 .third-page {
@@ -196,17 +193,18 @@ main {
 }
 
 /* Style the header */
-.header {
+.todo_wrapper > .header {
   background-color: var(--dl-color2);
   padding: 30px 40px;
   color: var(--dl-text-light);
   text-align: center;
 }
 /* Clear floats after the header */
-.header:after {
-  content: "";
-  display: table;
-  clear: both;
+
+.todo_wrapper > form {
+  padding: 0;
+  margin: 0;
+  border-radius: 10px 10px 0 0;
 }
 #myDIV > h2 {
   color: var(--dl-color5);
@@ -245,15 +243,24 @@ main {
   background: var(--dl-colorHover);
 }
 /* When clicked on, add a background color and strike out text */
-#myUL li.checked {
-  background: var(--dl-colorchkd);
+#myUL li.checked .noteText {
   color: var(--dl-text-light);
   text-decoration: line-through;
+}
+#myUL li.checked {
+  background: var(--dl-colorchkd);
+}
+#myUL li.checked .icons {
+  color: var(--dl-text-light);
 }
 /* Style the CRUD buttons */
 #myUL .icons {
   padding-right: 8px;
   letter-spacing: 0.4em;
+  width: 110px;
+}
+#myUL .noteText {
+  display: inline-block;
 }
 
 /* Style the input */
@@ -283,7 +290,11 @@ main {
   background-color: var(--dl-color3);
 }
 
+#myModal {
+  color: var(--dl-color5);
+}
+
 .todo_wrapper {
   width: 100%;
-  margin-top: 50px;
+  padding-right: 3rem;
 }
