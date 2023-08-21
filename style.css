@@ -177,11 +177,12 @@ main {
   align-items: flex-end;
 }
 
-.footer-list li,
-.footer-social li {
+.footer-list li {
   list-style: none;
   padding: 3rem;
+  font-weight: bold;
 }
+
 .footer-social li {
   padding: 1rem;
 }
