@@ -20,6 +20,10 @@
       href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;700&family=Roboto:ital,wght@0,100;0,400;0,700;1,500&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -78,69 +82,68 @@
         </div>
       </div>
       <div class="third-page">
-        <div id="iphone-mockup">
-          <img
-            src="images/iphone-mockup-blue.png"
-            alt="iphone mockup for DoneList"
-            width="300px"
-            height="600px"
-          />
-        </div>
-        <div id="mockup-text">
-          <p>
-            Have a secret to ease your life always inside pocket with our app
-          </p>
-          <br />
-          <p>Now, available on Google Play Store and App Store></p>
-          <div id="btn-app">
+        <div class="row">
+          <div class="col-md-5" id="iphone-mockup">
             <img
-              src="images/appstore.webp"
-              alt="app store"
-              width="150px"
-              height="50px"
+              src="images/iphone-mockup-white.png"
+              alt="iphone mockup for DoneList"
+              width="400px"
+              height="750px"
             />
-            <img
-              src="images/google_play.webp"
-              alt="play store"
-              width="190px"
-              height="75px"
-            />
+          </div>
+          <div class="col-md-7" id="mockup-text">
+            <div id="iphone-text">
+              <p>Have a secret tool to ease your life always in the pocket!</p>
+              <p>Now, available on Google Play Store and App Store</p>
+            </div>
+            <div id="btn-iphone">
+              <img
+                src="images/appstore.webp"
+                alt="app store"
+                width="150px"
+                height="50px"
+              />
+              <img
+                src="images/google_play.webp"
+                alt="play store"
+                width="190px"
+                height="75px"
+              />
+            </div>
           </div>
         </div>
       </div>
     </main>
     <footer>
       <div class="footer-container">
-        <ul class="footer-nav">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Our Demo</a></li>
-          <li><a href="#">Download App</a></li>
-          <li><a href="#">Register</a></li>
-        </ul>
-        <ul class="footer-social">
-          <li>
-            <a href="#"
-              ><img
-                src="https://img.icons8.com/material/48/facebook-new.png"
-                alt="Facebook"
-            /></a>
-          </li>
-          <li>
-            <a href="#"
-              ><img
-                src="https://img.icons8.com/material/48/instagram-new--v1.png"
-                alt="Instagram"
-            /></a>
-          </li>
-          <li>
-            <a href="#"
-              ><img
-                src="https://img.icons8.com/material/48/twitter.png"
-                alt="Twitter"
-            /></a>
-          </li>
-        </ul>
-        <p>&copy 2023 DoneList</p>
+        <div class="footer-list">
+          <div class="footer-nav">
+            <ul>
+              <li><a href="#">Home</a></li>
+              <li><a href="#">Our Demo</a></li>
+              <li><a href="#">Download App</a></li>
+              <li><a href="#">Register</a></li>
+            </ul>
+          </div>
+          <div class="footer-social">
+            <p>Meet our team on social media</p>
+            <ul>
+              <li>
+                <a href="#" class="fa fa-facebook"></a>
+              </li>
+              <li>
+                <a href="#" class="fa fa-twitter"></a>
+              </li>
+              <li>
+                <a href="#" class="fa fa-github"></a>
+              </li>
+              <li>
+                <a href="#" class="fa fa-linkedin"></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="copyright"><p>&copy 2023 DoneList</p></div>
       </div>
     </footer>
     <!-- Modal -->

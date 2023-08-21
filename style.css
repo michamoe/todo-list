@@ -68,8 +68,9 @@ main {
 }
 #first-page {
   padding: 2rem 0;
-  /* width: 100vw; */
-  min-height: 70%;
+  width: 100vw;
+  height: 80%;
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -79,8 +80,8 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 80%;
-  height: 400px;
+  width: 70%;
+  height: 450px;
   background-color: #11cd88;
 }
 .btn {
@@ -102,8 +103,8 @@ main {
 }
 
 #second-page {
-  padding: 3rem 0;
-  /* width: 100vw; */
+  padding: 7rem 5rem;
+  width: 100vw;
   height: 100%;
   display: flex;
   justify-content: space-between;
@@ -115,10 +116,80 @@ main {
   width: 60%;
 }
 
-#third-page {
-  width: 100%;
-  height: 80%;
-  padding: 5rem;
+.third-page {
+  width: 100vw;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f6f6f6;
+}
+
+#mockup-text {
+  padding-left: 3rem;
+  padding-top: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+}
+#iphone-text {
+  color: black;
+  font-size: 1rem;
+  font-weight: bold;
+}
+#btn-iphone {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 0px;
+}
+.footer-container {
+  width: 100vw;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.footer-list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-social {
+  padding-left: 10rem;
+  padding-top: 3rem;
+}
+.footer-nav ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+.footer-social ul {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+}
+
+.footer-list li {
+  list-style: none;
+  padding: 3rem;
+  font-weight: bold;
+}
+
+.footer-social li {
+  padding: 1rem;
+}
+
+.footer-list a {
+  color: #ddd;
+  text-decoration: none;
+}
+.copyright {
+  padding-top: 3rem;
 }
 
 /* Style the header */
