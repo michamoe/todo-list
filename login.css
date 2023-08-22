@@ -18,14 +18,18 @@
   }
 
 body{
-    background-color: #0d0b22;
+    background-color: var(--dl-color5);
+    font-family: "Quicksand", sans-serif;
+}
+
+.login{
+  max-width: 75%;
 }
 
 .input-code {
-    background:var(--dl-color2) ;
     margin: 0;
-    width: 75%;
     padding: 10px;
+    width: 120px;
     float: left;
     border-radius: 12px 0 0 12px;
     border: 0;
@@ -33,7 +37,7 @@ body{
   
   .login-btn {
     padding: 10px;
-    width: 25%;
+    width: 80px;
     background: var(--dl-color4);
     color: var(--dl-color5);
     text-align: center;
@@ -43,6 +47,18 @@ body{
     border: 0;
   }
 
+  .login-row{
+    margin: 0;
+    padding: 0;
+  }
+
   .login-btn:hover {
     background-color: var(--dl-color3);
+  }
+
+  .premium{
+    color: var(--dl-colorEven);
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;;
   }
