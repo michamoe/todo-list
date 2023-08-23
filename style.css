@@ -68,7 +68,6 @@ main {
 }
 #first-page {
   padding: 2rem 0;
-  width: 100vw;
   height: 80%;
 
   display: flex;
@@ -104,7 +103,6 @@ main {
 
 #second-page {
   padding: 7rem 5rem;
-  width: 100vw;
   height: 100%;
   display: flex;
   justify-content: space-between;
@@ -117,7 +115,6 @@ main {
 }
 
 .third-page {
-  width: 100vw;
   height: auto;
   display: flex;
   align-items: center;
@@ -146,7 +143,6 @@ main {
   padding-left: 0px;
 }
 .footer-container {
-  width: 100vw;
   height: 300px;
   display: flex;
   flex-direction: column;
