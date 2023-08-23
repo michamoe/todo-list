@@ -18,6 +18,40 @@ function setTodoTemplate(inputValue, checked = false) {
   </div>`;
 }
 
+function retrieve() {
+  let myNodelist = localStorage.getItem("node_list");
+  if (!myNodelist) {
+    clg("nothing in local storage ...");
+    return false;
+  }
+  let lis = document.querySelector("#myUL");
+  for (let i = 0; i < lis.length; i++) {
+    clg("retrieve - removing: " + lis[i].textContent);
+    lis[i].remove();
+  }
+  myNodelist = JSON.parse(myNodelist);
+  clg("retrieve - node_list: " + localStorage.getItem("node_list"));
+  for (let i = 0; i < myNodelist.length; i++) {
+    let inputValue = myNodelist[i].split(";")[0];
+    let noteList = document.querySelector("#myUL");
+    const newNote = document.createElement("li");
+    newNote.classList.add("d-flex");
+    let templateTrue = false;
+    if (myNodelist[i].split(";")[1] == "1") {
+      newNote.classList.add("checked");
+      templateTrue = true;
+    }
+    newNote.innerHTML = setTodoTemplate(inputValue, templateTrue);
+    clg(newNote.innerHTML);
+    noteList.appendChild(newNote);
+  }
+  save();
+  add_check_listener();
+  add_edit_listener();
+  add_close_listener();
+  return true;
+}
+
 function add_close_listener() {
   clg("adding close listener");
   var close = document.getElementsByClassName("close");
@@ -25,9 +59,34 @@ function add_close_listener() {
     close[i].onclick = function () {
       clg("close - button");
       this.parentElement.parentElement.remove();
-      // save();
+      save();
     };
   }
+}
+
+function save() {
+  // ["name;checked",]
+  let lis = document.querySelectorAll("#myUL>li>.noteText");
+  let result = [];
+  let name = "";
+  for (let i = 0; i < lis.length; i++) {
+    name = lis[i].innerHTML;
+    clg("save - name: " + name);
+    if (lis[i].parentElement.classList.contains("checked")) {
+      name = name + ";1";
+    } else {
+      name = name + ";0";
+    }
+    result.push(name);
+  }
+
+  if (result.length === 0) {
+    clg("save - node_list mt ");
+    localStorage.removeItem("node_list");
+    return false;
+  }
+  localStorage.setItem("node_list", JSON.stringify(result));
+  clg("save - node_list: " + JSON.stringify(result));
 }
 
 // Modal Dialog for empty input
@@ -45,21 +104,23 @@ function add_check_listener() {
       ev.target.classList.toggle("bi-check-circle"); // i
       ev.target.classList.toggle("bi-circle"); // i
       clg("checked toggled");
-      // save();
+      save();
     };
   });
 }
 
+if (!retrieve()) {
+  // Click on a close button to hide the current list item
+  add_close_listener();
 
-// Click on a close button to hide the current list item
-add_close_listener();
+  // Add "edit" functionality
+  add_edit_listener();
 
-// Add "edit" functionality
-add_edit_listener();
+  // Add a "checked" symbol when clicking on a list item
+  add_check_listener();
 
-// Add a "checked" symbol when clicking on a list item
-add_check_listener();
-
+  save();
+}
 
 // Prevent form submit, fire newElement(), reset input
 myDIV.addEventListener("submit", (event) => {
@@ -85,7 +146,7 @@ function newElement() {
   add_check_listener();
   add_edit_listener();
   add_close_listener();
-  // save();
+  save();
 }
 
 // Add edit listener to "edit" icon
