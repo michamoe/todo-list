@@ -313,4 +313,5 @@ main {
 .todo_wrapper {
   width: 100%;
   padding-right: 3rem;
+  min-height: 600px;
 }
