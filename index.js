@@ -4,7 +4,6 @@ function clg(variable) {
 }
 
 function setTodoTemplate(inputValue, checked = false) {
-  inputValue = inputValue.replace(/(<([^>]+)>)/gi, "");
   return `
    ${
      checked
@@ -25,7 +24,6 @@ function add_close_listener() {
     close[i].onclick = function () {
       clg("close - button");
       this.parentElement.parentElement.remove();
-      // save();
     };
   }
 }
@@ -45,7 +43,6 @@ function add_check_listener() {
       ev.target.classList.toggle("bi-check-circle"); // i
       ev.target.classList.toggle("bi-circle"); // i
       clg("checked toggled");
-      // save();
     };
   });
 }
@@ -68,10 +65,11 @@ myDIV.addEventListener("submit", (event) => {
 
 // Create a new list item in ul #myUL
 function newElement(noteText) {
+  noteText = noteText.replace(/(<([^>]+)>)/gi, "");
+  noteText = noteText.replace(";", "");
   if (noteText === "") {
     myModal.toggle();
   } else {
-    //noteText = document.getElementById("myInput").value;
     let noteList = document.querySelector("#myUL");
     const newNote = document.createElement("li");
     newNote.classList.add("d-flex");
@@ -83,7 +81,6 @@ function newElement(noteText) {
   add_check_listener();
   add_edit_listener();
   add_close_listener();
-  // save();
 }
 
 // Add edit listener to "edit" icon
