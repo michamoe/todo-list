@@ -50,7 +50,6 @@ function add_check_listener() {
   });
 }
 
-
 // Click on a close button to hide the current list item
 add_close_listener();
 
@@ -60,20 +59,19 @@ add_edit_listener();
 // Add a "checked" symbol when clicking on a list item
 add_check_listener();
 
-
 // Prevent form submit, fire newElement(), reset input
 myDIV.addEventListener("submit", (event) => {
   event.preventDefault();
-  newElement();
+  newElement(document.getElementById("myInput").value);
   document.getElementById("myInput").value = ""; // reset input
 });
 
 // Create a new list item in ul #myUL
-function newElement() {
-  if (document.getElementById("myInput").value === "") {
+function newElement(noteText) {
+  if (noteText === "") {
     myModal.toggle();
   } else {
-    let noteText = document.getElementById("myInput").value;
+    //noteText = document.getElementById("myInput").value;
     let noteList = document.querySelector("#myUL");
     const newNote = document.createElement("li");
     newNote.classList.add("d-flex");
@@ -206,4 +204,19 @@ class Cursor {
 
     return false;
   }
+}
+
+// Demo entries
+let demos = [
+  "Buy apples",
+  "Buy bananas",
+  "Do the laundry",
+  "Learn React.js",
+  "Uninstall Bring!",
+  "Call mom",
+  "Win the lottery",
+  "Start a business",
+];
+for (i = 0; i < demos.length; i++) {
+  newElement(demos[i]);
 }
