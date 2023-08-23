@@ -1,6 +1,21 @@
-let debug = true;
+let debug = false;
 function clg(variable) {
   if (debug) console.log(variable);
+}
+
+function setTodoTemplate(inputValue, checked = false) {
+  inputValue = inputValue.replace(/(<([^>]+)>)/gi, "");
+  return `
+   ${
+     checked
+       ? `<i class="bi bi-check-circle"></i>`
+       : `<i class="bi bi-circle"></i>`
+   }
+  <div class="noteText">${inputValue}</div>
+  <div class="icons">    
+    <i class="bi bi-pencil edit"></i>
+    <i class="bi bi-trash close"></i>
+  </div>`;
 }
 
 function retrieve() {
@@ -19,18 +34,15 @@ function retrieve() {
   for (let i = 0; i < myNodelist.length; i++) {
     let inputValue = myNodelist[i].split(";")[0];
     let noteList = document.querySelector("#myUL");
-    const templateString = `<div class="noteText">${inputValue}</div>
-    <div class="icons">
-      <i class="bi bi-check-circle check"></i>
-      <i class="bi bi-pencil edit"></i>
-      <i class="bi bi-trash close"></i>
-    </div>`;
     const newNote = document.createElement("li");
     newNote.classList.add("d-flex");
+    let templateTrue = false;
     if (myNodelist[i].split(";")[1] == "1") {
       newNote.classList.add("checked");
+      templateTrue = true;
     }
-    newNote.innerHTML = templateString;
+    newNote.innerHTML = setTodoTemplate(inputValue, templateTrue);
+    clg(newNote.innerHTML);
     noteList.appendChild(newNote);
   }
   save();
@@ -85,10 +97,12 @@ var myModal = new bootstrap.Modal(document.getElementById("myModal"), {
 // Add a "checked" symbol when clicking on a list item
 function add_check_listener() {
   clg("adding check listener");
-  var list = document.querySelectorAll("#myUL>li");
+  var list = document.querySelectorAll("#myUL > li > i");
   list.forEach((element) => {
     element.onclick = function (ev) {
-      ev.target.classList.toggle("checked");
+      ev.target.parentElement.classList.toggle("checked"); //li
+      ev.target.classList.toggle("bi-check-circle"); // i
+      ev.target.classList.toggle("bi-circle"); // i
       clg("checked toggled");
       save();
     };
@@ -122,19 +136,13 @@ function newElement() {
   } else {
     let noteText = document.getElementById("myInput").value;
     let noteList = document.querySelector("#myUL");
-    const templateString = `<div class="noteText">${noteText}</div>
-    <div class="icons">
-      <i class="bi bi-check-circle check"></i>
-      <i class="bi bi-pencil edit"></i>
-      <i class="bi bi-trash close"></i>
-    </div>`;
     const newNote = document.createElement("li");
     newNote.classList.add("d-flex");
-    newNote.innerHTML = templateString;
+    newNote.innerHTML = setTodoTemplate(noteText, false);
     clg(newNote);
     noteList.appendChild(newNote);
   }
-  // add event handler "close" to new element
+  // add event handlers to new element
   add_check_listener();
   add_edit_listener();
   add_close_listener();

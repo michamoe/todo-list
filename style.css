@@ -218,7 +218,7 @@ main {
 }
 /* Style the list items */
 #myUL > li {
-  cursor: pointer;
+  /* cursor: pointer; */
   position: relative;
   font-size: 1.1em;
   padding: 12px 8px 12px 40px;
@@ -251,14 +251,34 @@ main {
 }
 /* Style the CRUD buttons */
 #myUL .icons {
-  padding-right: 8px;
+  padding-right: 0px;
   letter-spacing: 0.4em;
-  width: 110px;
+  width: 75px;
 }
 #myUL .noteText {
   display: inline-block;
 }
-
+#myUL .icons i {
+  cursor: pointer;
+}
+#myUL .btn {
+  background-color: transparent;
+}
+#myUL .bi-circle,
+#myUL .bi-check-circle {
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  left: 10px;
+  height: 25px;
+  width: 25px;
+}
+#myUL li.checked button .hide {
+  cursor: pointer;
+  color: var(--dl-color5);
+  background-color: transparent;
+}
 /* Style the input */
 #myDIV input {
   margin: 0;
