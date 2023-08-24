@@ -207,5 +207,3 @@ class Cursor {
     return false;
   }
 }
-
-RTCDTMFToneChangeEvent
