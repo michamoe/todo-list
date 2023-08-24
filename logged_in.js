@@ -268,3 +268,4 @@ class Cursor {
     return false;
   }
 }
+
